@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Verification Code</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      
+    }
+    .container {
+      margin-top: 200px;
+      padding: 0px;
+      margin: auto;
+      margin-top: 200px;
+      border: 1px solid #dacfcf;
+      border-radius: 1%;
+      color: rgb(65, 75, 84);
+      height: 350px;
+      width: 350px;
+      color: rgb(96, 63, 63);
+    }
+    input[type="text"] {
+      width: 20px;
+      height: 20px;
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="envelope.png" alt="Envelope" style="width: 50px;">
+    
+    <h2>Please Check Your Mail</h2>
+    <p>We've Sent a Code to Your Mail</p>
+    
+    <div>
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+      <input type="text" maxlength="1">
+    </div>
+    <p>Didn't get the Code? <a href="#">Resend</a></p>
+    <button type="button">Cancel</button>
+    <button type="button">Verify</button>
+  </div>
+</body>
+</html>
