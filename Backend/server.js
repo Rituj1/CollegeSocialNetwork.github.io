@@ -8,10 +8,10 @@ const port = 3001;
 
 // MySQL connection
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root', // Your MySQL username
-  password: 'Rituj@12345', // Your MySQL password
-  database: 'CollegeProject', // Your database name
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root', // Your MySQL username
+  password: process.env.DB_PASSWORD || 'Rituj@12345', // Your MySQL password
+  database: process.env.DB_NAME || 'CollegeProject', // Your database name
 });
 
 // Connect to the database
@@ -40,19 +40,33 @@ app.post('/api/register', async (req, res) => {
   }
 
   try {
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // SQL query to insert user
-    const query = 'INSERT INTO users (first_name, last_name, email, password, department, course, gender) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    db.query(query, [first_name, last_name, email, hashedPassword, department, course, gender], (err, results) => {
+    // Check if email already exists
+    const checkEmailQuery = 'SELECT * FROM users WHERE email = ?';
+    db.query(checkEmailQuery, [email], async (err, results) => {
       if (err) {
-        if (err.code === 'ER_DUP_ENTRY') {
-          return res.status(400).json({ error: 'Email already exists!' });
-        }
-        return res.status(500).json({ error: err.message });
+        return res.status(500).json({ error: 'Database query error' });
       }
-      res.status(201).json({ message: 'User registered successfully!' });
+
+      if (results.length > 0) {
+        return res.status(400).json({ error: 'Email already exists!' });
+      }
+
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Insert user into the database
+      const insertQuery =
+        'INSERT INTO users (first_name, last_name, email, password, department, course, gender) VALUES (?, ?, ?, ?, ?, ?, ?)';
+      db.query(
+        insertQuery,
+        [first_name, last_name, email, hashedPassword, department, course, gender],
+        (err, results) => {
+          if (err) {
+            return res.status(500).json({ error: 'Database insertion error' });
+          }
+          res.status(201).json({ message: 'User registered successfully!' });
+        }
+      );
     });
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
