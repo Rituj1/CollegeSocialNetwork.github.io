@@ -1,8 +1,8 @@
 -- Select the database you want to work with
 USE CollegeProject;
 
--- Create Users table
-CREATE TABLE Users (
+-- Create Users table if it does not exist
+CREATE TABLE IF NOT EXISTS Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
@@ -14,8 +14,8 @@ CREATE TABLE Users (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create Posts table
-CREATE TABLE Posts (
+-- Create Posts table if it does not exist
+CREATE TABLE IF NOT EXISTS Posts (
     post_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     content TEXT NOT NULL,
@@ -23,8 +23,8 @@ CREATE TABLE Posts (
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
--- Create Comments table
-CREATE TABLE Comments (
+-- Create Comments table if it does not exist
+CREATE TABLE IF NOT EXISTS Comments (
     comment_id INT AUTO_INCREMENT PRIMARY KEY,
     post_id INT,
     user_id INT,
@@ -34,8 +34,8 @@ CREATE TABLE Comments (
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
--- Create Messages table
-CREATE TABLE Messages (
+-- Create Messages table if it does not exist
+CREATE TABLE IF NOT EXISTS Messages (
     message_id INT AUTO_INCREMENT PRIMARY KEY,
     sender_id INT,
     receiver_id INT,
@@ -45,8 +45,8 @@ CREATE TABLE Messages (
     FOREIGN KEY (receiver_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
--- Create Friends table
-CREATE TABLE Friends (
+-- Create Friends table if it does not exist
+CREATE TABLE IF NOT EXISTS Friends (
     friendship_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id_1 INT,
     user_id_2 INT,
@@ -55,3 +55,6 @@ CREATE TABLE Friends (
     FOREIGN KEY (user_id_1) REFERENCES Users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id_2) REFERENCES Users(user_id) ON DELETE CASCADE
 );
+
+
+
