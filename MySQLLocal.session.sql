@@ -58,6 +58,4 @@ CREATE TABLE Friends (
 
 -- SHOW TABLES;
 
-
 DESCRIBE Users;
-

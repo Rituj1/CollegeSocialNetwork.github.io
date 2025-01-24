@@ -3,6 +3,7 @@
 <head>
     <title>UNIMATE Sign Up</title>
     <style>
+        /* Keep your existing styles */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -75,6 +76,13 @@
             color: #333;
             font-weight: bold;
         }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -82,7 +90,7 @@
         <img src="Unimate.jpg" alt="UNIMATE Logo">
         <h1>UNIMATE</h1>
         <h2>Sign Up</h2>
-        <form action="signup_handler.php" method="POST">
+        <form id="signupForm">
             <label for="first_name">First Name:</label>
             <input type="text" id="first_name" name="first_name" placeholder="Enter your first name" required>
 
@@ -91,6 +99,7 @@
 
             <label for="college_email">College Email Address:</label>
             <input type="email" id="college_email" name="college_email" placeholder="Enter your college email" required>
+            <div id="emailError" class="error">Please enter your correct college email!</div>
 
             <label for="new_password">New Password:</label>
             <input type="password" id="new_password" name="new_password" placeholder="Enter your password" required autocomplete="off">
@@ -127,5 +136,26 @@
         <a href="index.html">Login</a>
         <p>GALGOTIAS SOCIAL NETWORK</p>
     </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const email = document.getElementById('college_email').value;
+            const emailError = document.getElementById('emailError');
+
+            // Validate email domain
+            if (
+                email.endsWith('@galgotiasuniversity.edu.in') || 
+                email.endsWith('@galgotiasuniversity.ac.in')
+            ) {
+                emailError.style.display = 'none'; // Hide error
+                // Redirect to OTP Verification page
+                window.location.href = 'Otpverify.html';
+            } else {
+                emailError.style.display = 'block'; // Show error
+            }
+        });
+    </script>
 </body>
 </html>
