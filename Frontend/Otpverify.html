@@ -1,59 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <title>Verification Code</title>
+  <title>Verify OTP</title>
   <style>
+    /* Your original styling remains untouched */
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      
+      padding: 50px;
+      background: url(backgr.jpg);
+      height: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
+
     .container {
-      margin-top: 200px;
-      padding: 0px;
-      margin: auto;
-      margin-top: 200px;
-      border: 1px solid #dacfcf;
-      border-radius: 1%;
-      color: rgb(65, 75, 84);
-      height: 350px;
-      width: 350px;
-      color: rgb(96, 63, 63);
+      background-color: #f5f5f5;
+      border: 1px solid #ccc;
+      padding: 100px;
+      width: 300px;
+      margin: 0 auto;
+      background-color: #cfd5d8;
+      background: url(backg.jpg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
-    input[type="text"] {
-      width: 20px;
-      height: 20px;
-      text-align: center;
+
+    img {
+      height: 100px;
+      width: 100px;
     }
+
+    h2 {
+      color: #efeded;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
     button {
-      padding: 10px 20px;
       background-color: #4CAF50;
       color: white;
+      padding: 12px 20px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      margin-top: 10px;
     }
+
     button:hover {
-      background-color: #3e8e41;
+      background-color: #45a049;
+    }
+
+    a {
+      text-decoration: none;
+      color: #c2b2b2;
+    }
+
+    p {
+      color: #f7f9f8;
     }
   </style>
+
+  <script>
+    async function verifyOtp(event) {
+      event.preventDefault();
+      const email = document.getElementById("email").value;
+      const otp = document.getElementById("otp").value;
+      const newPassword = document.getElementById("newPassword").value;
+
+      try {
+        const response = await fetch("/verify-otp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, otp, newPassword }),
+        });
+
+        const message = await response.text();
+        alert(message);
+      } catch (error) {
+        alert("An error occurred. Please try again.");
+      }
+    }
+  </script>
 </head>
 <body>
   <div class="container">
-    <img src="envelope.png" alt="Envelope" style="width: 50px;">
-    
-    <h2>Please Check Your Mail</h2>
-    <p>We've Sent a Code to Your Mail</p>
-    
-    <div>
-      <input type="text" maxlength="1">
-      <input type="text" maxlength="1">
-      <input type="text" maxlength="1">
-      <input type="text" maxlength="1">
-    </div>
-    <p>Didn't get the Code? <a href="#">Resend</a></p>
-    <button type="button">Cancel</button>
-    <button type="button">Verify</button>
+    <img src="aleart.png">
+    <h2>Verify OTP</h2>
+    <p>Enter the OTP sent to your email and reset your password.</p>
+    <form onsubmit="verifyOtp(event)">
+     <!-- <input type="email" id="email" placeholder="Email" required>-->
+      <input type="text" id="otp" placeholder="Enter OTP" required>
+      <!-- <input type="password" id="newPassword" placeholder="Enter new password" required> -->
+      <button type="submit">Submit</button>
+    </form>
+    <p>
+      <a href="index.html">Back to Login</a>
+    </p>
   </div>
 </body>
 </html>

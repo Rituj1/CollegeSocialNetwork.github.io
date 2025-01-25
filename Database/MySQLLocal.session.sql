@@ -56,5 +56,13 @@ CREATE TABLE IF NOT EXISTS Friends (
     FOREIGN KEY (user_id_2) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
+-- Add an OTP column to store the hashed OTP
+ALTER TABLE users
+ADD COLUMN otp VARCHAR(255) DEFAULT NULL;
+
+-- Add columns for OTP and its expiry
+--ALTER TABLE users ADD COLUMN otp VARCHAR(6);
+ALTER TABLE users ADD COLUMN otp_expiry DATETIME;
+
 
 
